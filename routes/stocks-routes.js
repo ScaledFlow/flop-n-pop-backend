@@ -2,21 +2,15 @@ const express = require('express');
 
 const router = express.Router();
 
-const DUMMY_STOCKS = [
-  {
-    id: 'tsla',
-    name: 'Tesla'
-  },
-  {
-    id: 'appl',
-    name: 'Apple'
-  }
-]
 
-const DUMMY_PORTFOLIO = [
+const DUMMY_PORTFOLIO_USER = [
+  {
+    user_id: 'jaleintz',
+    first_name: 'John',
+    last_name: 'Leintz',
+    portfolios: [
   {
     portfolioId: 'wondertech',
-    user: 'jaleintz',
     stocks: [ 
       {
         id: 'tsla',
@@ -34,7 +28,6 @@ const DUMMY_PORTFOLIO = [
     },
     {
       portfolioId: 'airline',
-      user: 'jaleintz',
       stocks: [ 
         {
           id: 'dal',
@@ -52,7 +45,6 @@ const DUMMY_PORTFOLIO = [
       },
       {
         portfolioId: 'legacyauto',
-        user: 'jaleintz',
         stocks: [ 
           {
             id: 'gm'
@@ -65,145 +57,97 @@ const DUMMY_PORTFOLIO = [
           }
         ]
         }
-  ]
-
-  const DUMMY_PORTFOLIO_USER = [
-    {
-      user_id: 'jaleintz',
-      portfolios: [
-    {
-      portfolioId: 'wondertech',
-      stocks: [ 
-        {
-          id: 'tsla',
-          name: 'Tesla'
-        },
-        {
-          id: 'amzn',
-          name: "Amazon"
-        },
-        {
-          id: 'msft',
-          name: 'Microsoft'
-        }
       ]
+  },
+
+  {
+    user_id: 'bajohnson',
+    first_name: 'Bob',
+    last_name: 'Johnson',
+    portfolios: [
+  {
+    portfolioId: 'wondertech',
+    stocks: [ 
+      {
+        id: 'tsla',
+        name: 'Tesla'
       },
       {
-        portfolioId: 'airline',
-        stocks: [ 
-          {
-            id: 'dal',
-            name: 'Delta Airlines'
-          },
-          {
-            id: 'aal',
-            name: 'American Airlines'
-          },
-          {
-            id: 'luv',
-            name: 'Southwest Airlines'
-          }
-        ]
-        },
-        {
-          portfolioId: 'legacyauto',
-          stocks: [ 
-            {
-              id: 'gm'
-            },
-            {
-              id: 'f'
-            },
-            {
-              id: 'bmw'
-            }
-          ]
-          }
-        ]
+        id: 'amzn',
+        name: "Amazon"
+      },
+      {
+        id: 'msft',
+        name: 'Microsoft'
+      }
+    ]
     },
-
     {
-      user_id: 'laleintz',
-      portfolios: [
-    {
-      portfolioId: 'wondertech',
+      portfolioId: 'airline',
       stocks: [ 
         {
-          id: 'tsla',
-          name: 'Tesla'
+          id: 'dal',
+          name: 'Delta Airlines'
         },
         {
-          id: 'amzn',
-          name: "Amazon"
+          id: 'aal',
+          name: 'American Airlines'
         },
         {
-          id: 'msft',
-          name: 'Microsoft'
+          id: 'luv',
+          name: 'Southwest Airlines'
         }
       ]
       },
       {
-        portfolioId: 'airline',
+        portfolioId: 'legacyauto',
         stocks: [ 
           {
-            id: 'dal',
-            name: 'Delta Airlines'
+            id: 'gm',
+            name: 'General Motors'
           },
           {
-            id: 'aal',
-            name: 'American Airlines'
+            id: 'f',
+            name: 'Ford Motor'
           },
           {
-            id: 'luv',
-            name: 'Southwest Airlines'
+            id: 'bmw',
+            name: 'Bayerische Motoren Werke'
+          },
+          {
+            id: 'tm',
+            name: 'Toyota Motor'
           }
         ]
-        },
-        {
-          portfolioId: 'legacyauto',
-          stocks: [ 
-            {
-              id: 'gm',
-              name: 'General Motors'
-            },
-            {
-              id: 'f',
-              name: 'Ford Motor'
-            },
-            {
-              id: 'bmw',
-              name: 'Bayerische Motoren Werke'
-            },
-            {
-              id: 'tm',
-              name: 'Toyota Motor'
-            }
-          ]
-          }
-        ]
-    }
-  ]
-  console.log(DUMMY_PORTFOLIO_USER[0]);
-  console.log(DUMMY_PORTFOLIO_USER[0].user_id);
-  console.log(DUMMY_PORTFOLIO_USER[0].portfolios[0]);
-  console.log(DUMMY_PORTFOLIO_USER[0].portfolios[0].stocks[0].id);
+        }
+      ]
+  }
+]
+
+// console.log(DUMMY_PORTFOLIO_USER[0]);
+// console.log(DUMMY_PORTFOLIO_USER[0].user_id);
+// console.log(DUMMY_PORTFOLIO_USER[0].portfolios[0]);
+// console.log(DUMMY_PORTFOLIO_USER[0].portfolios[0].stocks[0].id);
 
 // http://localhost:5000/api/stocks/appl
+// get stock by ticker
 router.get('/:tid', (req, res, next) => {
   const tickerId = req.params.tid;
-  const stock = DUMMY_STOCKS.find(t => {
-    return t.id === tickerId;
-  });
-  res.json({stock: stock});
+  res.json({stock: tickerId});
 });
 
-// http://localhost:5000/api/stocks/portfolio/wondertech
-router.get('/portfolio/:pid', (req, res, next) => {
-  const portfolioId = req.params.pid;
-  const portfolio = DUMMY_PORTFOLIO.find(p => {
-    return p.portfolioId === portfolioId;
+// http://localhost:5000/api/stocks/user/jaleintz
+// http://localhost:5000/api/stocks/user/bajohnson
+
+// get portfolio by user id
+router.get('/user/:uid', (req, res, next) => {
+  const userId = req.params.uid;
+  const user = DUMMY_PORTFOLIO_USER.find(u => {
+    return u.user_id === userId;
   });
-  res.json({portfolio: portfolio});
+  res.json({user: user});
 });
+
+
 
 module.exports = router;
