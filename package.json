@@ -1,0 +1,24 @@
+{
+  "name": "flop-n-pop-backend",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "nodemon app.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/ScaledFlow/flop-n-pop-backend.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/ScaledFlow/flop-n-pop-backend/issues"
+  },
+  "homepage": "https://github.com/ScaledFlow/flop-n-pop-backend#readme",
+  "dependencies": {
+    "express": "^4.17.1",
+    "nodemon": "^2.0.4"
+  }
+}
