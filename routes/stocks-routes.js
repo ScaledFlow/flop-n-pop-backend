@@ -133,6 +133,11 @@ const DUMMY_PORTFOLIO_USER = [
 // get stock by ticker
 router.get('/:tid', (req, res, next) => {
   const tickerId = req.params.tid;
+
+  if (!tickerId) {
+    return res.status('404').json({message: 'Ticker not received'})
+  }
+
   res.json({stock: tickerId});
 });
 
@@ -145,9 +150,13 @@ router.get('/user/:uid', (req, res, next) => {
   const user = DUMMY_PORTFOLIO_USER.find(u => {
     return u.user_id === userId;
   });
+
+  if (!user) {
+    return res.status('404').json({message: 'Could not find user.'})
+  }
+
   res.json({user: user});
 });
-
 
 
 module.exports = router;
