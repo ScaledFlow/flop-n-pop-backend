@@ -129,8 +129,8 @@ const DUMMY_PORTFOLIO_USER = [
 // console.log(DUMMY_PORTFOLIO_USER[0].portfolios[0]);
 // console.log(DUMMY_PORTFOLIO_USER[0].portfolios[0].stocks[0].id);
 
-// http://localhost:5000/api/stocks/appl
 // get stock by ticker
+// http://localhost:5000/api/stocks/appl
 router.get('/:tid', (req, res, next) => {
   const tickerId = req.params.tid;
 
@@ -141,18 +141,28 @@ router.get('/:tid', (req, res, next) => {
   res.json({stock: tickerId});
 });
 
+// get portfolio by user id
 // http://localhost:5000/api/stocks/user/jaleintz
 // http://localhost:5000/api/stocks/user/bajohnson
-
-// get portfolio by user id
 router.get('/user/:uid', (req, res, next) => {
   const userId = req.params.uid;
   const user = DUMMY_PORTFOLIO_USER.find(u => {
     return u.user_id === userId;
   });
 
+  // if (!user) {
+  //   return res.status('404').json({message: 'Could not find user.'})
+  // }
+
+  // Error for middleware
   if (!user) {
-    return res.status('404').json({message: 'Could not find user.'})
+    const error = new Error('Could not find the provided user_id');
+    error.code = 404;
+    // Asynchronous Error
+     return next(error);
+
+    // Synchronous Error
+    // throw error;
   }
 
   res.json({user: user});

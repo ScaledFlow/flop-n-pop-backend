@@ -6,6 +6,14 @@ const stocksRoutes = require('./routes/stocks-routes');
 const app = express();
 
 app.use('/api/stocks', stocksRoutes);
-console.log('from app');
+
+// Middleware error handling
+app.use((error, req, res, next) => {
+  if (res.headerSent) {
+    return next(error);
+  }
+  res.status(error.code || 500)
+  res.json({message: error.message || 'An unknown error occured!'})
+})
 
 app.listen(5000);
