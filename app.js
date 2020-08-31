@@ -5,6 +5,8 @@ const stocksRoutes = require('./routes/stocks-routes');
 
 const app = express();
 
+app.use(bodyParser.json());
+
 app.use('/api/stocks', stocksRoutes);
 
 // Middleware error handling

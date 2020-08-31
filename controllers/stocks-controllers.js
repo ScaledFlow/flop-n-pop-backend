@@ -1,5 +1,14 @@
 const HttpError = require('../models/http-error');
 
+const DUMMY_PORT = [
+  {
+    user_id: 'jaleintz',
+    first_name: 'John',
+    last_name: 'Leintz',
+  }
+]
+
+
 const DUMMY_PORTFOLIO_USER = [
   {
     user_id: 'jaleintz',
@@ -153,6 +162,26 @@ const getStockPortfolioByID = (req, res, next) => {
   res.json({user: user});
 }
 
+// const createPortfolio = (req, res, next ) => {
+//   const { user_id, first_name, last_name}
+//   // const user_id = req.body.user_id
+// };
+
+
+const createdPortfolio = (req, res, next ) => {
+  // const user_id = req.body.user_id
+  const { user_id, first_name, last_name} = req.body;
+  const createdPortfolio = {
+    user_id,
+    first_name,
+    last_name
+  };
+  DUMMY_PORT.push(createdPortfolio);  //upshift()
+
+  res.status(201).json({portfolio: createdPortfolio })
+};
+
 
 exports.getStockByTicker = getStockByTicker;
 exports.getStockPortfolioByID = getStockPortfolioByID;
+exports.createPortfolio = createdPortfolio;

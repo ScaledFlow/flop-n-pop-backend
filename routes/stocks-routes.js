@@ -13,5 +13,8 @@ router.get('/:tid', stocksControllers.getStockByTicker);
 // http://localhost:5000/api/stocks/user/bajohnson
 router.get('/user/:uid', stocksControllers.getStockPortfolioByID );
 
+// post portfolio
+router.post('/', stocksControllers.createPortfolio);
+
 
 module.exports = router;
