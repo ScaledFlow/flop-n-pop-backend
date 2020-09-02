@@ -1,5 +1,7 @@
-const HttpError = require('../models/http-error');
+// const uuid = require('uuid');
+const { v4: uuidv4 } = require('uuid');
 
+const HttpError = require('../models/http-error');
 
 const DUMMY_PORTFOLIO = 
 [
@@ -60,6 +62,7 @@ const createdPortfolio = (req, res, next ) => {
   // const user_id = req.body.user_id
   const { user_id, email, phone, name, stocks} = req.body;
   const createdPortfolio = {
+    id: uuidv4(),
     user_id,
     email,
     phone,
