@@ -1,11 +1,46 @@
 const HttpError = require('../models/http-error');
 
+
+const DUMMY_PORTFOLIO = 
+[
+  {
+    "user_id" : "jaleintz",
+    "email" : "jaleintz@gmail.com",
+    "phone" : "651-999-9999",
+    "name" : {"first" : "John", "last" : "Leintz"},
+    "stocks" : [
+    { "portfolio" : "Wonder Stocks", "ticker" : "appl" },
+    { "portfolio" : "Wonder Stocks", "ticker" : "tsla" },
+    { "portfolio" : "Legacy Auto", "ticker" : "gm" },
+    { "portfolio" : "Legacy Auto", "ticker" : "f" }
+    ]
+  },
+  {
+    "user_id" : "bajohnson",
+    "email" : "bajohnson.com",
+    "phone" : "651-888-88888",
+    "name" : {"first" : "Bob", "last" : "Johnson"},
+    "stocks" : [
+    { "portfolio" : "Wonder Stocks", "ticker" : "appl" },
+    { "portfolio" : "Wonder Stocks", "ticker" : "tsla" },
+    { "portfolio" : "Legacy Auto", "ticker" : "gm" },
+    { "portfolio" : "Legacy Auto", "ticker" : "f" }
+    ]
+  }
+  ]
+
+
 const DUMMY_PORT = [
   {
     user_id: 'jaleintz',
     first_name: 'John',
     last_name: 'Leintz',
+    portfolios: [ {
+      portfolioId: 'suerptech',
+    }
+    ]
   }
+  
 ]
 
 
@@ -148,7 +183,7 @@ const getStockByTicker = (req, res, next) => {
 
 const getStockPortfolioByID = (req, res, next) => {
   const userId = req.params.uid;
-  const user = DUMMY_PORTFOLIO_USER.find(u => {
+  const user = DUMMY_PORTFOLIO.find(u => {
     return u.user_id === userId;
   });
 
