@@ -1,9 +1,12 @@
-// const uuid = require('uuid');
+console.log("stocks-controllers");
+
+// middleware functions
+
 const { v4: uuidv4 } = require('uuid');
 
 const HttpError = require('../models/http-error');
 
-const DUMMY_PORTFOLIO = 
+let DUMMY_PORTFOLIO = 
 [
   {
     "id" : "005975b3-500b-4c47-999b-2d03912146b1",
@@ -34,6 +37,7 @@ const DUMMY_PORTFOLIO =
   ]
 
 const getStockByTicker = (req, res, next) => {
+  console.log("getStockByTicker");
   const tickerId = req.params.tid;
 
   if (!tickerId) {
@@ -44,6 +48,7 @@ const getStockByTicker = (req, res, next) => {
 };
 
 const getStocksPortfolioByID = (req, res, next) => {
+  console.log("getStocksPortfolioByID");
   const id = req.params.id;
   console.log(id);
   const user = DUMMY_PORTFOLIO.find(u => {
@@ -62,6 +67,7 @@ const getStocksPortfolioByID = (req, res, next) => {
 
 
 const getStockPortfolioByUserID = (req, res, next) => {
+  console.log("getStockPortfolioByUserID");
   const userId = req.params.uid;
   console.log(userId);
   const user = DUMMY_PORTFOLIO.find(u => {
@@ -78,9 +84,9 @@ const getStockPortfolioByUserID = (req, res, next) => {
   res.json({user: user});
 }
 
-
 const createdPortfolio = (req, res, next ) => {
-  // const user_id = req.body.user_id
+  console.log("createdPortfolio");
+  console.log("log body from createdPortfolio: " + req.body);
   const { user_id, email, phone, name, stocks} = req.body;
   const createdPortfolio = {
     id: uuidv4(),
@@ -95,7 +101,30 @@ const createdPortfolio = (req, res, next ) => {
   res.status(201).json({portfolio: createdPortfolio})
 };
 
+// not working
+// http://localhost:5000/api/stocks/jaleintz
+const updatePortfolioStocks = (req, res, next ) => {
+  console.log("updatePortfolioStocks");
+  const { stocks } = req.body;
+  const userId = req.parms.uid;
+  console.log("update port: " + userID);
+
+  // const updateStocks = DUMMY_PLACES.find(u => u.id === userId);
+  // updateStocks.stocks = stocks;
+}
+
+const deletePortfolioStocks = (req, res, next ) => {
+  console.log("deletePortfolioStocks");
+  const userId = req.params.uid;
+  console.log(userId);
+  DUMMY_PORTFOLIO = DUMMY_PORTFOLIO.filter(u => u.user_id !== userId);
+  console.log(DUMMY_PORTFOLIO);
+  res.status(200).json({ message: 'Deleted Portfolio.'});
+};
+
 exports.getStockByTicker = getStockByTicker;
 exports.getStockPortfolioByUserID = getStockPortfolioByUserID;
 exports.getStocksPortfolioByID = getStocksPortfolioByID;
 exports.createPortfolio = createdPortfolio;
+exports.updatePortfolioStocks = updatePortfolioStocks;
+exports.deletePortfolioStocks = deletePortfolioStocks;

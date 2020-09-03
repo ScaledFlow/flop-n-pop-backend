@@ -1,3 +1,5 @@
+console.log("app.js");
+
 const express = require('express');
 const bodyParser = require('body-parser');
 
@@ -12,6 +14,7 @@ app.use(bodyParser.json());
 app.use('/api/stocks', stocksRoutes);
 
 app.use((req, res, next) => {
+  console.log("app request body: " + req.body);
   const error = new HttpError('Could not find this route', 404);
   console.log("hit generic error");
   throw error;
