@@ -6,6 +6,7 @@ const HttpError = require('../models/http-error');
 const DUMMY_PORTFOLIO = 
 [
   {
+    "id" : "005975b3-500b-4c47-999b-2d03912146b1",
     "user_id" : "jaleintz",
     "email" : "jaleintz@gmail.com",
     "phone" : "651-999-9999",
@@ -18,6 +19,7 @@ const DUMMY_PORTFOLIO =
     ]
   },
   {
+    "id" : "005975b3-500b-4c47-999b-2d03912146b2",
     "user_id" : "bajohnson",
     "email" : "bajohnson.com",
     "phone" : "651-888-88888",
@@ -41,8 +43,27 @@ const getStockByTicker = (req, res, next) => {
   res.json({stock: tickerId});
 };
 
-const getStockPortfolioByID = (req, res, next) => {
+const getStocksPortfolioByID = (req, res, next) => {
+  const id = req.params.id;
+  console.log(id);
+  const user = DUMMY_PORTFOLIO.find(u => {
+    return u.id === id;
+  });
+
+  // Error for middleware
+  if (!user) {
+    return next(
+      new HttpError('Could not find the user_id', 404)
+    );
+  }
+
+  res.json({user: user});
+}
+
+
+const getStockPortfolioByUserID = (req, res, next) => {
   const userId = req.params.uid;
+  console.log(userId);
   const user = DUMMY_PORTFOLIO.find(u => {
     return u.user_id === userId;
   });
@@ -75,5 +96,6 @@ const createdPortfolio = (req, res, next ) => {
 };
 
 exports.getStockByTicker = getStockByTicker;
-exports.getStockPortfolioByID = getStockPortfolioByID;
+exports.getStockPortfolioByUserID = getStockPortfolioByUserID;
+exports.getStocksPortfolioByID = getStocksPortfolioByID;
 exports.createPortfolio = createdPortfolio;
