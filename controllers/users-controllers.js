@@ -1,5 +1,4 @@
 console.log('users-controllers');
-const { validationResult } = require('express-validator');
 
 const { v4: uuidv4 } = require('uuid');
 const { validationResults } = require('express-validator');
