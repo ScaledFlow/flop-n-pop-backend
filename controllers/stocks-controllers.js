@@ -66,7 +66,6 @@ const getStocksPortfolioByID = (req, res, next) => {
   res.json({user: user});
 }
 
-
 const getStockPortfolioByUserID = (req, res, next) => {
   console.log("getStockPortfolioByUserID");
   const userId = req.params.uid;
@@ -102,16 +101,28 @@ const createdPortfolio = (req, res, next ) => {
   res.status(201).json({portfolio: createdPortfolio})
 };
 
-// not working
-// http://localhost:5000/api/stocks/jaleintz
-const updatePortfolioStocks = (req, res, next ) => {
-  console.log("updatePortfolioStocks");
-  const { stocks } = req.body;
-  const userId = req.parms.uid;
-  console.log("update port: " + userID);
 
-  // const updateStocks = DUMMY_PLACES.find(u => u.id === userId);
-  // updateStocks.stocks = stocks;
+// http://localhost:5000/api/stocks/jaleintz@gmail.com
+// {
+//   "email" : "jaleintz@gmail.com",
+//   "stocks" : [
+//   { "portfolio" : "Wonder Stocks", "ticker" : "appl" }
+//   ]
+// }
+
+// http://localhost:5000/api/stocks/jaleintz
+const updatePortfolioById = (req, res, next ) => {
+  console.log("updatePortfolioStocks");
+  console.log(req.body.email);
+  const userId = req.params.uid;
+  console.log(userId);
+
+  const updatedPortfolio = { ...DUMMY_PORTFOLIO.find(u => u.id = userId)};
+  console.log(updatedPortfolio);
+
+  // note - need to figure out how to push portfolio section (to be added) to 
+  // object array. 
+``
 }
 
 const deletePortfolioStocks = (req, res, next ) => {
@@ -127,5 +138,5 @@ exports.getStockByTicker = getStockByTicker;
 exports.getStockPortfolioByUserID = getStockPortfolioByUserID;
 exports.getStocksPortfolioByID = getStocksPortfolioByID;
 exports.createPortfolio = createdPortfolio;
-exports.updatePortfolioStocks = updatePortfolioStocks;
+exports.updatePortfolioById = updatePortfolioById;
 exports.deletePortfolioStocks = deletePortfolioStocks;

@@ -9,6 +9,8 @@ const router = express.Router();
 
 router.get('/', usersControllers.getUsers);
 
+const getApiTest = require('../util/stocksApi');
+
 router.post('/signup', [
   check('name').not().isEmpty(),
   check('email').normalizeEmail().isEmail(),
