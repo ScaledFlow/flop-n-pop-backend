@@ -3,6 +3,7 @@ console.log("stocks-controllers");
 // middleware functions
 
 const { v4: uuidv4 } = require('uuid');
+const { validationResults } = require('express-validator');
 
 const HttpError = require('../models/http-error');
 

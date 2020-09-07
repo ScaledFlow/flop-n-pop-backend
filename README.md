@@ -4,6 +4,7 @@ npm i express
 npm i nodemon
 npm i --save uuid
 npm i bcryptjs
+npm i validator
 
 https://www.youtube.com/watch?v=yLjfS5iKZPM
 
