@@ -9,7 +9,7 @@
 - npm install finnhub --save
 - npm install request --save
 - npm install crypto-price --save
-
+- npm install mongodb --save
 https://www.youtube.com/watch?v=yLjfS5iKZPM
 
 db.portfolio.updateOne {
