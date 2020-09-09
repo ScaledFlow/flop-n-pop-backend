@@ -10,6 +10,7 @@
 - npm install request --save
 - npm install crypto-price --save
 - npm install mongodb --save
+- npm install mongoose --save
 https://www.youtube.com/watch?v=yLjfS5iKZPM
 
 db.portfolio.updateOne {

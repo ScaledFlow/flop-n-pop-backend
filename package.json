@@ -24,6 +24,7 @@
     "express-validator": "^6.6.1",
     "finnhub": "^1.2.1",
     "mongodb": "^3.6.1",
+    "mongoose": "^5.10.4",
     "nodemon": "^2.0.4",
     "request": "^2.88.2",
     "uuid": "^8.3.0",
