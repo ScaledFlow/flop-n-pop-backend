@@ -6,6 +6,7 @@ const bodyParser = require('body-parser');
 const stocksRoutes = require('./routes/stocks-routes');
 const usersRoutes = require('./routes/users-routes');
 const quotesRoutes = require('./routes/quotes-routes');
+const placesRoutes = require('./routes/places-routes');
 const HttpError = require('./models/http-error');
 
 const app = express();
@@ -15,6 +16,7 @@ app.use(bodyParser.json());
 app.use('/api/stocks', stocksRoutes);
 app.use('/api/users', usersRoutes);
 app.use('/api/quotes', quotesRoutes);
+app.use('/api/places', placesRoutes);
 
 app.use((req, res, next) => {
   console.log("app request body: " + req.body.email);

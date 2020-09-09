@@ -19,9 +19,12 @@
   "homepage": "https://github.com/ScaledFlow/flop-n-pop-backend#readme",
   "dependencies": {
     "axios": "^0.20.0",
+    "crypto-price": "0.0.6",
     "express": "^4.17.1",
     "express-validator": "^6.6.1",
+    "finnhub": "^1.2.1",
     "nodemon": "^2.0.4",
+    "request": "^2.88.2",
     "uuid": "^8.3.0",
     "validator": "^13.1.1"
   }
