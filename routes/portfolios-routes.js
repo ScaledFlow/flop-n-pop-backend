@@ -1,4 +1,4 @@
-console.log("stock-routes");
+console.log("portfolios-routes");
 
 const express = require('express');
 const { check } = require('express-validator');

@@ -7,10 +7,10 @@ const Schema = mongoose.Schema;
 const portfolioSchema = new Schema ({
   email: { type: String, required: true },
   name: {
-    first: { type: String, required: true },
-    last: { type: String, required: true }
+    first: { type: String},
+    last: { type: String }
   },
-  stocks: [
+  portfolios: [
     {
       portfolio: { type: String },
       ticker: {type: String}

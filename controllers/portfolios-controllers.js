@@ -1,4 +1,4 @@
-console.log("stocks-controllers");
+console.log("portfolios-controllers");
 
 // middleware functions
 
@@ -16,7 +16,7 @@ let DUMMY_PORTFOLIO =
     "email" : "jaleintz@gmail.com",
     "phone" : "651-999-9999",
     "name" : {"first" : "John", "last" : "Leintz"},
-    "stocks" : [
+    "portfolios" : [
     { "portfolio" : "Wonder Stocks", "ticker" : "appl" },
     { "portfolio" : "Wonder Stocks", "ticker" : "tsla" },
     { "portfolio" : "Legacy Auto", "ticker" : "gm" },
@@ -103,20 +103,24 @@ const getStockPortfolioByUserID = (req, res, next) => {
 // };
 
 
-const createdPortfolio = (req, res, next ) => {
+const createdPortfolio = async (req, res, next ) => {
   console.log("createdPortfolio");
   console.log("log body from createdPortfolio: " + req.body);
-  const { user_id, email, phone, name, stocks} = req.body;
-  const createdPortfolio = {
-    id: uuidv4(),
-    user_id,
+  const { email, name, portfolios} = req.body;
+  const createdPortfolio = new Portfolio ({
     email,
-    phone,
-    name : name,
-    stocks: stocks
-  };
-  DUMMY_PORTFOLIO.push(createdPortfolio);  //upshift()
-  console.log(DUMMY_PORTFOLIO);
+    name,
+    portfolios
+  });
+  
+  try {
+    await createdPortfolio.save();
+  } catch (err) {
+    const error = new HttpError(
+      'Create portfolio failed, please try again.', 500);
+    return next(error);
+  }
+
   res.status(201).json({portfolio: createdPortfolio})
 };
 

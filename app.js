@@ -4,7 +4,7 @@ const express = require('express');
 const bodyParser = require('body-parser');
 const mongoose = require('mongoose');
 
-const portfolioRoutes = require('./routes/portfolios-routes');
+const portfoliosRoutes = require('./routes/portfolios-routes');
 const usersRoutes = require('./routes/users-routes');
 const quotesRoutes = require('./routes/quotes-routes');
 const placesRoutes = require('./routes/places-routes');
@@ -14,14 +14,14 @@ const app = express();
 
 app.use(bodyParser.json());
 
-app.use('/api/stocks', portfolioRoutes);
+app.use('/api/portfolios', portfoliosRoutes);
 app.use('/api/users', usersRoutes);
 app.use('/api/quotes', quotesRoutes);
 app.use('/api/places', placesRoutes);
 
 app.use((req, res, next) => {
+  console.log(req.url);
   console.log("app request body: " + req.body.email);
-  console.log("app request body: " + req.body.password);
   const error = new HttpError('Could not find this route', 404);
   console.log("hit generic error: " + error);
   throw error;
