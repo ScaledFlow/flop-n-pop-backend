@@ -102,6 +102,18 @@ const getStockPortfolioByUserID = (req, res, next) => {
 //   res.status(201).json({portfolio: createdPortfolio})
 // };
 
+// http://localhost:5000/api/portfolios
+
+// {
+//   "email": "johnleintz@scaledflow.com",
+//   "name" : {"first" : "John", "last" : "Leintz"},
+//   "portfolios" : [
+//      { "portfolio" : "Wonder Stocks", "ticker" : "appl" },
+//      { "portfolio" : "Legacy Auto", "ticker" : "gm" },
+//      { "portfolio" : "Legacy Auto", "ticker" : "f" }
+//   ]
+// }
+
 
 const createdPortfolio = async (req, res, next ) => {
   console.log("createdPortfolio");
