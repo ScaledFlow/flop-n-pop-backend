@@ -49,41 +49,76 @@ const getStockByTicker = (req, res, next) => {
   res.json({stock: tickerId});
 };
 
-const getStocksPortfolioByID = (req, res, next) => {
-  console.log("getStocksPortfolioByID");
-  const id = req.params.id;
-  console.log(id);
-  const user = DUMMY_PORTFOLIO.find(u => {
-    return u.id === id;
-  });
+// const getStocksPortfolioByID = (req, res, next) => {
+//   console.log("getStocksPortfolioByID");
+//   const id = req.params.id;
+//   console.log(id);
+//   const user = DUMMY_PORTFOLIO.find(u => {
+//     return u.id === id;
+//   });
 
-  // Error for middleware
-  if (!user) {
-    return next(
-      new HttpError('Could not find the user_id', 404)
-    );
+//   // Error for middleware
+//   if (!user) {
+//     return next(
+//       new HttpError('Could not find the user_id', 404)
+//     );
+//   }
+
+//   res.json({user: user});
+// }
+
+
+const getPortfolioById = async (req, res, next) => {
+  
+  console.log("getPortfolioById");
+  const portfolioId = req.params.id;
+  console.log(portfolioId);
+
+  let portfolio;
+
+  try {
+    portfolio = await Portfolio.findById(portfolioId);
+    console.log(portfolio);
+  } catch (err) {
+    const error = new HttpError('Failed, could not find portfolio by id.', 500);
+    return next(error);
   }
 
-  res.json({user: user});
-}
-
-const getStockPortfolioByUserID = (req, res, next) => {
-  console.log("getStockPortfolioByUserID");
-  const userId = req.params.uid;
-  console.log(userId);
-  const user = DUMMY_PORTFOLIO.find(u => {
-    return u.user_id === userId;
-  });
-
-  // Error for middleware
-  if (!user) {
-    return next(
-      new HttpError('Could not find the user_id', 404)
-    );
+  if (!portfolio) {
+    const error = new HttpError('Could not find the user_id', 404);
+    return next(error);
   }
 
-  res.json({user: user});
+  res.json({portfolio: portfolio.toObject({ getters: true })});
 }
+
+// getStockPortfolioByUserID
+
+const getPortfolioByEmailId = async (req, res, next) => {
+  
+  console.log("getPortfolioByEmail");
+  const email_id = req.params.email_id;
+  console.log(email_id);
+
+  let portfolio;
+
+  try {
+    portfolio = await Portfolio.findById(email_id);
+  } catch (err) {
+    const error = new HttpError(
+      'Something failed, could not find portfolio', 500
+    );
+    return next(error);
+  }
+
+  // Error for middleware
+  if (!portfolio) {
+      new HttpError('Could not find portfolio by email_id', 404);
+    return next(error);
+  };
+
+  res.json({portfolio: portfolio.toObject()});
+};
 
 // const createdPortfolio = (req, res, next ) => {
 //   console.log("createdPortfolio");
@@ -170,8 +205,8 @@ const deletePortfolioStocks = (req, res, next ) => {
 };
 
 exports.getStockByTicker = getStockByTicker;
-exports.getStockPortfolioByUserID = getStockPortfolioByUserID;
-exports.getStocksPortfolioByID = getStocksPortfolioByID;
+exports.getPortfolioByEmailId = getPortfolioByEmailId;
+exports.getPortfolioById = getPortfolioById;
 exports.createPortfolio = createdPortfolio;
 exports.updatePortfolioById = updatePortfolioById;
 exports.deletePortfolioStocks = deletePortfolioStocks;

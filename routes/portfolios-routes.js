@@ -9,15 +9,15 @@ const router = express.Router();
 
 // get - stock by ticker
 // http://localhost:5000/api/stocks/appl
-router.get('/:tid', portfoliosControllers.getStockByTicker);
+// router.get('/:tid', portfoliosControllers.getStockByTicker);
 
-// get - portfolio by user id
-// http://localhost:5000/api/stocks/user/jaleintz
-router.get('/user/:uid', portfoliosControllers.getStockPortfolioByUserID );
+// get - portfolio by email id
+// http://localhost:5000/api/stocks/email/johnleintz@scaledflow.com
+router.get('/user/:eid', portfoliosControllers.getPortfolioByEmailId );
 
 // get - portfolio by id
 // http://localhost:5000/api/stocks/id/005975b3-500b-4c47-999b-2d03912146b1
-router.get('/id/:id', portfoliosControllers.getStocksPortfolioByID );
+router.get('/:id', portfoliosControllers.getPortfolioById );
 
 // http://localhost:5000/api/stocks
 
