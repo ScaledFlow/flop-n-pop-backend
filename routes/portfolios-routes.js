@@ -13,7 +13,7 @@ const router = express.Router();
 
 // get - portfolio by email id
 // http://localhost:5000/api/stocks/email/johnleintz@scaledflow.com
-router.get('/user/:eid', portfoliosControllers.getPortfolioByEmailId );
+router.get('/email/:email', portfoliosControllers.getPortfolioByEmail );
 
 // get - portfolio by id
 // http://localhost:5000/api/stocks/id/005975b3-500b-4c47-999b-2d03912146b1

@@ -49,24 +49,7 @@ const getStockByTicker = (req, res, next) => {
   res.json({stock: tickerId});
 };
 
-// const getStocksPortfolioByID = (req, res, next) => {
-//   console.log("getStocksPortfolioByID");
-//   const id = req.params.id;
-//   console.log(id);
-//   const user = DUMMY_PORTFOLIO.find(u => {
-//     return u.id === id;
-//   });
-
-//   // Error for middleware
-//   if (!user) {
-//     return next(
-//       new HttpError('Could not find the user_id', 404)
-//     );
-//   }
-
-//   res.json({user: user});
-// }
-
+// http://localhost:5000/api/portfolios/5f5a6a61563c73468cafc8d0
 
 const getPortfolioById = async (req, res, next) => {
   
@@ -92,50 +75,34 @@ const getPortfolioById = async (req, res, next) => {
   res.json({portfolio: portfolio.toObject({ getters: true })});
 }
 
-// getStockPortfolioByUserID
+// getStockPortfolioByEmail
 
-const getPortfolioByEmailId = async (req, res, next) => {
+// http://localhost:5000/api/portfolios/email/johnleintz@scaledflow.com
+
+const getPortfolioByEmail = async (req, res, next) => {
   
   console.log("getPortfolioByEmail");
-  const email_id = req.params.email_id;
-  console.log(email_id);
+  const email = req.params.email;
+  console.log(email);
 
   let portfolio;
 
   try {
-    portfolio = await Portfolio.findById(email_id);
-  } catch (err) {
-    const error = new HttpError(
-      'Something failed, could not find portfolio', 500
-    );
+    portfolio = await Portfolio.find({ email: email});
+  } catch(err) {
+    const error = new HttpError('Fetching portfolio by email failed', 404);
     return next(error);
   }
 
-  // Error for middleware
-  if (!portfolio) {
-      new HttpError('Could not find portfolio by email_id', 404);
-    return next(error);
+  if (!portfolio || portfolio.length === 0) {
+    return next(
+      new HttpError('Could not find portfolio by email', 404)
+    );
   };
 
-  res.json({portfolio: portfolio.toObject()});
+  res.json({portfolio: portfolio.map(portfolio => portfolio.toObject({
+     getters: true}))});
 };
-
-// const createdPortfolio = (req, res, next ) => {
-//   console.log("createdPortfolio");
-//   console.log("log body from createdPortfolio: " + req.body);
-//   const { user_id, email, phone, name, stocks} = req.body;
-//   const createdPortfolio = {
-//     id: uuidv4(),
-//     user_id,
-//     email,
-//     phone,
-//     name : name,
-//     stocks: stocks
-//   };
-//   DUMMY_PORTFOLIO.push(createdPortfolio);  //upshift()
-//   console.log(DUMMY_PORTFOLIO);
-//   res.status(201).json({portfolio: createdPortfolio})
-// };
 
 // http://localhost:5000/api/portfolios
 
@@ -148,7 +115,6 @@ const getPortfolioByEmailId = async (req, res, next) => {
 //      { "portfolio" : "Legacy Auto", "ticker" : "f" }
 //   ]
 // }
-
 
 const createdPortfolio = async (req, res, next ) => {
   console.log("createdPortfolio");
@@ -205,7 +171,7 @@ const deletePortfolioStocks = (req, res, next ) => {
 };
 
 exports.getStockByTicker = getStockByTicker;
-exports.getPortfolioByEmailId = getPortfolioByEmailId;
+exports.getPortfolioByEmail = getPortfolioByEmail;
 exports.getPortfolioById = getPortfolioById;
 exports.createPortfolio = createdPortfolio;
 exports.updatePortfolioById = updatePortfolioById;
