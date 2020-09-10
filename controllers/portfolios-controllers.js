@@ -6,6 +6,7 @@ const { v4: uuidv4 } = require('uuid');
 const { validationResults } = require('express-validator');
 
 const HttpError = require('../models/http-error');
+const Portfolio = require('../models/portfolio');
 
 let DUMMY_PORTFOLIO = 
 [
@@ -83,6 +84,24 @@ const getStockPortfolioByUserID = (req, res, next) => {
 
   res.json({user: user});
 }
+
+// const createdPortfolio = (req, res, next ) => {
+//   console.log("createdPortfolio");
+//   console.log("log body from createdPortfolio: " + req.body);
+//   const { user_id, email, phone, name, stocks} = req.body;
+//   const createdPortfolio = {
+//     id: uuidv4(),
+//     user_id,
+//     email,
+//     phone,
+//     name : name,
+//     stocks: stocks
+//   };
+//   DUMMY_PORTFOLIO.push(createdPortfolio);  //upshift()
+//   console.log(DUMMY_PORTFOLIO);
+//   res.status(201).json({portfolio: createdPortfolio})
+// };
+
 
 const createdPortfolio = (req, res, next ) => {
   console.log("createdPortfolio");
