@@ -29,12 +29,7 @@ const getUsers = (req,res, next) => {
 // }
 
 const signup = async (req, res, next) => {
-  console.log('signup');
-  console.log(req.body);
-
   const errors = validationResult(req);
-
-  // console.log('value of validation: ' + errors);
 
   if (!errors.isEmpty()) {
     return next(
@@ -47,7 +42,6 @@ const signup = async (req, res, next) => {
   let existingUser;
   try {
     existingUser = await User.findOne({ email: email })
-    console.log('existing user: ' + existingUser);
   } catch (err) {
     const error = new HttpError('Sign up failed, please try again later', 500);
     return next(error);
@@ -65,10 +59,7 @@ const signup = async (req, res, next) => {
     password
   });
 
-  console.log('created user: ' + createdUser);
-
   try {
-    console.log("user does not exist")
     await createdUser.save();
   } catch (err) {
     const error = new HttpError('Sign up failed, please try again', 500);
@@ -78,16 +69,22 @@ const signup = async (req, res, next) => {
   res.status(201).json({user: createdUser.toObject({ getters: true })});
 }
 
+const login = async (req, res, next) => {
+  console.log(req.body);
 
-const login = (req, res, next) => {
-  console.log(req.body.email);
-  console.log(req.body.password);
   const { email, password, } = req.body;
 
-  const identifiedUser = DUMMY_USERS.find(u => u.email === email);
-  console.log(identifiedUser)
-  if (!identifiedUser || identifiedUser.password !== password) {
-    throw new HttpError('Could not identify user, invalid credentials.', 401);
+  let existingUser;
+  try {
+    existingUser = await User.findOne({ email: email })
+  } catch (err) {
+    const error = new HttpError('Login failed, please try again later', 500);
+    return next(error);
+  }
+
+  if (!existingUser || existingUser.password !== password) {
+    const error = new HttpError('Invalid credentials, could not log you in.', 401);
+    return next(error);
   }
   
   res.json({message: 'Logged in!'});
