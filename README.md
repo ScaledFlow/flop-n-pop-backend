@@ -11,6 +11,7 @@
 - npm install crypto-price --save
 - npm install mongodb --save
 - npm install mongoose --save
+- npm install mongoose-unique-validator --save
 
 - https://www.youtube.com/watch?v=yLjfS5iKZPM
 
