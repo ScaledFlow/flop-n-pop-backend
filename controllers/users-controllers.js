@@ -15,11 +15,22 @@ let DUMMY_USERS = [
   }
 ]
 
-const getUsers = (req,res, next) => {
-  console.log("getUsers");
-  res.json({ users: DUMMY_USERS });
+// Get
+// http://localhost:5000/api/users/
+
+const getUsers = async (req,res, next) => {
+  let users;
+  try {
+    users = await User.find({}, '-password');
+  } catch (err) {
+    const error = new HttpError ('Fetching users failed, try again later.', 500);
+    return next(err);
+  }
+  res.json({users: users.map(user => user.toObject({ getters: true}))});
+
 };
 
+// Post
 // http://localhost:5000/api/users/signup
 
 // {
@@ -68,6 +79,14 @@ const signup = async (req, res, next) => {
 
   res.status(201).json({user: createdUser.toObject({ getters: true })});
 }
+
+// Post
+// http://localhost:5000/api/users/login
+
+// {
+//   "email": "johnleintzg@gmail.com",
+//   "password": "test32452"
+// }
 
 const login = async (req, res, next) => {
   console.log(req.body);
