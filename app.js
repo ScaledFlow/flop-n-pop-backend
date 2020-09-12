@@ -43,6 +43,5 @@ mongoose
     console.log('Server Started');
   }) 
   .catch(err => {
-    console.log ("xxxxxxxxxxxxxx error xxxxxxxxxxxxxxxx")
     console.log(err);
   });

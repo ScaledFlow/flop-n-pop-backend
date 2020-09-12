@@ -1,7 +1,5 @@
 console.log("portfolios-controllers");
 
-// middleware functions
-
 const { v4: uuidv4 } = require('uuid');
 const { validationResult } = require('express-validator');
 const mongoose = require('mongoose');
@@ -10,8 +8,6 @@ const HttpError = require('../models/http-error');
 const Portfolio = require('../models/portfolio');
 const User = require('../models/user');
 
-// Delete at some oint
-const { getPlace } = require('./places-controllers');
 const mongooseUniqueValidator = require('mongoose-unique-validator');
 
 // GET
@@ -136,7 +132,6 @@ const updatePortfolioById = async (req, res, next ) => {
 
   res.status(200).json({ portfolio: portfolio.toObject({ getters: true}) });
 }
-
 
 // DELETE
 // http://localhost:5000/api/portfolios/5f5bd726f01d164c84f5c8e6

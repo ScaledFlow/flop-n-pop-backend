@@ -11,6 +11,7 @@ router.get('/', usersControllers.getUsers);
 
 const getApiTest = require('../util/stocksApi');
 
+// POST
 router.post('/signup', [
   check('name').not().isEmpty(),
   check('email').normalizeEmail().isEmail(),
@@ -18,6 +19,7 @@ router.post('/signup', [
 ],
 usersControllers.signup);
 
+// POST
 router.post('/login',  usersControllers.login);
 
 module.exports = router;
