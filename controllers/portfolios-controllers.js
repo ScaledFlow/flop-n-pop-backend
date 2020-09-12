@@ -4,13 +4,18 @@ console.log("portfolios-controllers");
 
 const { v4: uuidv4 } = require('uuid');
 const { validationResult } = require('express-validator');
+const mongoose = require('mongoose');
 
 const HttpError = require('../models/http-error');
 const Portfolio = require('../models/portfolio');
+const User = require('../models/user');
+
+// Delete at some oint
 const { getPlace } = require('./places-controllers');
+const mongooseUniqueValidator = require('mongoose-unique-validator');
 
 // GET
-// http://localhost:5000/api/portfolios/5f5bd726f01d164c84f5c8e6
+// http://localhost:5000/api/portfolios/5f5bd726f01d164c84f5c8e6git 
 
 const getPortfolioById = async (req, res, next) => {
   const portfolioId = req.params.id;
@@ -35,24 +40,50 @@ const getPortfolioById = async (req, res, next) => {
 
 // POST
 // http://localhost:5000/api/portfolios
+
 // {
-//   "portfolioName": "Wonder Stocks",
-//   "assetType": "stock",              // metal, crypto, currency or stock
+//   "portfolioName": "Amazing Stocks",
+//   "assetType": "crypto",
 //   "scanAlert": true,
-//   "assets" : [{ "appl", "tsla"}]
+//   "assets" : ["appl", "tsla"],
+//   "creator": "5f5c31e0bc347f177c571157"
 // }
 
 const createdPortfolio = async (req, res, next ) => {
-  const { portfolioName, assetType, scanAlert, assets } = req.body;
+  const { portfolioName, assetType, scanAlert, assets, creator } = req.body;
+
   const createdPortfolio = new Portfolio ({
     portfolioName,
     assetType,
     scanAlert,
-    assets
+    assets,
+    creator
   });
+
+  console.log(createdPortfolio);
+
+  let user;
+
+  try {
+    user = await User.findById(creator);
+  } catch (err) {
+    const error = new HttpError('could not find user, please try again', 500);
+    return next(error);
+  }
+
+  if (!user) {
+    const error = new HttpError('could not find user for provide id', 404);
+    return next (error);
+  }
   
   try {
-    await createdPortfolio.save();
+    // await createdPortfolio.save();
+    const sess = await mongoose.startSession();
+    sess.startTransaction();
+    await createdPortfolio.save({ session: sess });
+    user.portfolios.push(createdPortfolio);
+    await user.save({ session: sess });
+    await sess.commitTransaction();
   } catch (err) {
     const error = new HttpError(
       'Create portfolio failed, please try again.', 500);
